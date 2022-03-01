@@ -59,19 +59,16 @@ const subscriptionDetails=async function(req,res){
 
 const subscriptionDetailsWithDate=async function(req,res){
     try{
-        const details=await subscriptionModel.find({user_name:req.params.userName});
+        const details=await subscriptionModel.findOne({user_name:req.params.userName,start_date:req.params.date});
         if(!details){
             return res.status(404).send({status:false,message:"no subscription"})
         }
 
         const day1 = new Date(details.start_date);
         const day2 = new Date(details.valid_till);
-        console.log(day1)
-        console.log(day2)
+        
         const difference= Math.abs(day2-day1);
-        console.log(difference)
-        const days_left = difference/(1000 * 3600 * 24)
-        console.log(days_left)
+        const days_left = Math.ceil(difference/(1000 * 3600 * 24))
 
         const data={
            plan_id: details.plan_id,
