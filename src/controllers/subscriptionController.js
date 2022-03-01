@@ -18,13 +18,17 @@ const subscription=async function(req,res){
 
     try{
         const requestBody=req.body
-        const {user_name,plan_id,start_date}=req.body;
-        const startDate=new Date(start_date)
-       
-        const validTillDate=startDate.setDate(startDate.getDate() + plansDetails[plan_id][0]);
-        
+        const {user_name,plan_id,start_date}=requestBody;
+
+        const isUserValid=await userModel.findOne({user_name:user_name})
+        if(!isUserValid){
+            return res.status(404).send({status:false,message:"user not exist"});
+        };
+
+        const startDate=new Date(start_date)       
+        const validTillDate=startDate.setDate(startDate.getDate() + plansDetails[plan_id][0]); 
         const x=new Date(validTillDate)
-        const valid_till = x.getFullYear()+'-'+(x.getMonth()+1)+'-'+x.getDate();
+        const valid_till = plan_id==="FREE"?plansDetails[plan_id][0]:x.getFullYear()+'-'+(x.getMonth()+1)+'-'+x.getDate();
         
         requestBody["valid_till"]=valid_till
         requestBody["amount"]=plansDetails[plan_id][1]
