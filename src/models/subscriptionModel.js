@@ -11,13 +11,19 @@ const subscriptionSchema = new mongoose.Schema({
     },
 
     "start_date":{
-        type:Date
+        type:String
     },
 
     "valid_till":{
-        type:Date
+        type:String
+    },
+    "status":{
+        type:String,
+        enum:["FALIURE","SUCCESS"]
+    },
+    "amount":{
+        type:Number
     }
-
 } , { timestamps : true});
 
 module.exports = mongoose.model('Subscription1' , subscriptionSchema);

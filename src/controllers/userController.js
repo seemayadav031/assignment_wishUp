@@ -8,10 +8,10 @@ const user=async function(req,res){
 
         const userName=req.params.userName;
         const user=await userModel.create({user_name:userName});
-        return res.status(200).send({status:"Success",data:user});
+        return res.status(200).send({status:true,data:user});
 
     }catch(error){
-        return res.status(500).send({status:"Fail",message:error.message});
+        return res.status(500).send({status:false,message:error.message});
     }
 };
 
@@ -21,13 +21,13 @@ const userDetails=async function(req,res){
         const userDetails=await userModel.find({user_name:userName});
 
         if(!userDetails){
-            return res.status(404).send({status:"Fail",message:"user not found"});
+            return res.status(404).send({status:false,message:"user not found"});
         }
 
-        return res.status(200).send({status:"Success",data:userDetails});
+        return res.status(200).send({status:true,data:userDetails});
 
     }catch(error){
-        return res.status(500).send({status:"Fail",message:error.message})
+        return res.status(500).send({status:false,message:error.message})
     }
 };
 

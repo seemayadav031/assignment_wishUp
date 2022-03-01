@@ -7,6 +7,8 @@ const subscriptionController=require('../controllers/subscriptionController');
 router.put('/user/:userName',userController.user);
 router.get('/user/:userName',userController.userDetails);
 
+router.post('/subscription',subscriptionController.subscription);
+
 
 
 
