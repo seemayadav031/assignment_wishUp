@@ -8,6 +8,8 @@ router.put('/user/:userName',userController.user);
 router.get('/user/:userName',userController.userDetails);
 
 router.post('/subscription',subscriptionController.subscription);
+router.get('/subscription/:userName',subscriptionController.subscriptionDetails);
+router.get('/subscription/:userName/:date',subscriptionController.subscriptionDetailsWithDate);
 
 
 

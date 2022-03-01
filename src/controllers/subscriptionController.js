@@ -43,6 +43,50 @@ const subscription=async function(req,res){
 
 };
 
+const subscriptionDetails=async function(req,res){
+    try{
+        const details=await subscriptionModel.find({user_name:req.params.userName});
+        if(!details){
+            return res.status(404).send({status:false,message:"no subscription"})
+        }
+
+        return res.status(200).send({status:true,data:details})
+
+    }catch(error){
+        return res.status(500).send({status:false,message:error.message})
+    }
+} ;
+
+const subscriptionDetailsWithDate=async function(req,res){
+    try{
+        const details=await subscriptionModel.find({user_name:req.params.userName});
+        if(!details){
+            return res.status(404).send({status:false,message:"no subscription"})
+        }
+
+        const day1 = new Date(details.start_date);
+        const day2 = new Date(details.valid_till);
+        console.log(day1)
+        console.log(day2)
+        const difference= Math.abs(day2-day1);
+        console.log(difference)
+        const days_left = difference/(1000 * 3600 * 24)
+        console.log(days_left)
+
+        const data={
+           plan_id: details.plan_id,
+           days_left:days_left
+        }
+
+        return res.status(200).send({status:true,data:data})
+
+    }catch(error){
+        return res.status(500).send({status:false,message:error.message})
+    }
+}
+
 module.exports = {
-    subscription
+    subscription,
+    subscriptionDetails,
+    subscriptionDetailsWithDate
 };

@@ -17,10 +17,6 @@ const subscriptionSchema = new mongoose.Schema({
     "valid_till":{
         type:String
     },
-    "status":{
-        type:String,
-        enum:["FALIURE","SUCCESS"]
-    },
     "amount":{
         type:Number
     }
